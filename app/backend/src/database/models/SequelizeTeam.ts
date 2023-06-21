@@ -11,7 +11,7 @@ import db from '.';
 class SequelizeTeam extends Model<InferAttributes<SequelizeTeam>,
 InferCreationAttributes<SequelizeTeam>> {
   declare id: CreationOptional<number>;
-  declare teams_name: string
+  declare team_name: string
 }
 
 SequelizeTeam.init({
@@ -21,7 +21,7 @@ SequelizeTeam.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  teams_name: {
+  team_name: {
     type: DataTypes.STRING,
     allowNull: false
   }
