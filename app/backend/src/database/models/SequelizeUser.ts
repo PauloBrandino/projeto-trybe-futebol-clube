@@ -57,5 +57,5 @@ import {
   // Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
   // Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
   
-  export default SequelizeTeam;
+  export default SequelizeUser;
   
