@@ -1,5 +1,5 @@
-import IUser from "./IUser";
+import IUser from './IUser';
 
 export default interface IToken {
-    generate(user: IUser): string
+  generate(user: IUser): string
 }
