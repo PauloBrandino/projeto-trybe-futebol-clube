@@ -6,6 +6,7 @@ import TeamModel from "../models/TeamModel";
 export default class TeamService {
     
     constructor(private teamModel: ITeamModel = new TeamModel()){}
+
     public async getAllTeams(): Promise<ServiceResponse<ITeams[]>> {
         const allTeams = await this.teamModel.findAll()
 
