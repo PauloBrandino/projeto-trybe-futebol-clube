@@ -2,14 +2,15 @@ import UserModel from "../models/UserModel";
 import IUserModel from "../Interfaces/IUserModel";
 import { ServiceResponse } from "../Interfaces/ServiceResponse";
 import IEncrypter from "../Interfaces/IEncrypter";
-import Encrypter from "./Encripyter";
+import Encrypter from "./Encrypter";
 import IToken from "../Interfaces/IToken";
+import Token from "./TokenJWT";
 
 export default class UserService {
     constructor(
         private userModel: IUserModel = new UserModel(),
         private encrypter: IEncrypter = new Encrypter(),
-        private tokenGenerator: IToken) {};
+        private tokenGenerator: IToken = new Token()) {};
 
     public async login(email: string, password: string): Promise<ServiceResponse<{token: string}>> {
         const getUser = await this.userModel.getByEmail(email);
