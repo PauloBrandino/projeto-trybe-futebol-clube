@@ -51,5 +51,24 @@ describe('Testes para times', () => {
       expect(chaiHttpResponse.status).to.equal(200);
       expect(chaiHttpResponse.body).to.deep.equal(mockTeam);
     });
+  });
+
+  describe('ERROS ROTA /teams/:id', () => {
+    beforeEach(async () => {
+      sinon
+        .stub(SequelizeTeam, 'findByPk')
+        .resolves(null);
+    });
+
+    afterEach(() => {
+      (SequelizeTeam.findByPk as sinon.SinonStub).restore();
+    });
+
+    it('Deve retornar mensagem de não encontrado se o time não existe', async function () {
+      chaiHttpResponse = await chai.request(app).get('/teams/1000');
+
+      expect(chaiHttpResponse.status).to.equal(404);
+      expect(chaiHttpResponse.body.message).to.equal('Team 1000 not found')
+    });
   })
 });

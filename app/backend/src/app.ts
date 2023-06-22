@@ -27,7 +27,7 @@ class App {
   }
 
   private routes(): void {
-    this.app.use(router)
+    this.app.use(router);
   }
 
   public start(PORT: string | number): void {

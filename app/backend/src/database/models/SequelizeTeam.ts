@@ -12,7 +12,7 @@ import SequelizeMatches from './SequelizeMatches';
 class SequelizeTeam extends Model<InferAttributes<SequelizeTeam>,
 InferCreationAttributes<SequelizeTeam>> {
   declare id: CreationOptional<number>;
-  declare teamName: string
+  declare teamName: string;
 }
 
 SequelizeTeam.init({
@@ -25,12 +25,12 @@ SequelizeTeam.init({
   teamName: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'teams',
   timestamps: false,
-  underscored: true
+  underscored: true,
 });
 
 export default SequelizeTeam;
