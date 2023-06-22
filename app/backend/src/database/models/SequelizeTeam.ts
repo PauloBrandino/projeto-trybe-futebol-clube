@@ -12,7 +12,7 @@ import SequelizeMatches from './SequelizeMatches';
 class SequelizeTeam extends Model<InferAttributes<SequelizeTeam>,
 InferCreationAttributes<SequelizeTeam>> {
   declare id: CreationOptional<number>;
-  declare team_name: string
+  declare teamName: string
 }
 
 SequelizeTeam.init({
@@ -22,25 +22,15 @@ SequelizeTeam.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  team_name: {
+  teamName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   }
 }, {
   sequelize: db,
-  modelName: 'Teams',
+  modelName: 'teams',
   timestamps: false,
+  underscored: true
 });
-
-/**
-  * `Workaround` para aplicar as associations em TS:
-  * Associations 1:N devem ficar em uma das instâncias de modelo
-  * */
-
-SequelizeMatches.belongsTo(SequelizeTeam, { foreignKey: 'home_team_id', as: 'homeMatches' });
-SequelizeMatches.belongsTo(SequelizeTeam, { foreignKey: 'away_team_id', as: 'awayMatches' });
-
-SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'home_team_id', as: 'homeTeams' });
-SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'away_team_id', as: 'awayTeams' });
 
 export default SequelizeTeam;

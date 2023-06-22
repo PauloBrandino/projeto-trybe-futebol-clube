@@ -6,60 +6,56 @@ import {
   CreationOptional,
 } from 'sequelize';
 import db from '.';
+import SequelizeTeam from './SequelizeTeam';
 // import OtherModel from './OtherModel';
 
 class SequelizeMatches extends Model<InferAttributes<SequelizeMatches>,
 InferCreationAttributes<SequelizeMatches>> {
   declare id: CreationOptional<number>;
-  declare home_team_id: number
-  declare home_team_goals: number
-  declare away_team_id: number
-  declare away_team_goals: number
-  declare in_progress: boolean
+  declare homeTeamId: number
+  declare homeTeamGoals: number
+  declare awayTeamId: number
+  declare awayTeamGoals: number
+  declare inProgress: boolean
 }
 
 SequelizeMatches.init({
-  id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  home_team_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  home_team_goals: {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    homeTeamId: {
       type: DataTypes.INTEGER,
       allowNull: false
-  },
-  away_team_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-  },
-  away_team_goals: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-  },
-  in_progress: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-  }
+    },
+    homeTeamGoals: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    awayTeamId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    awayTeamGoals: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    inProgress: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    }
   }, {
-  sequelize: db,
-  modelName: 'Matches',
-  timestamps: false,
-});
+    sequelize: db,
+    modelName: 'matches',
+    timestamps: false,
+  });
 
-/**
-  * `Workaround` para aplicar as associations em TS:
-  * Associations 1:N devem ficar em uma das instâncias de modelo
-  * */
+SequelizeMatches.belongsTo(SequelizeTeam, { foreignKey: 'homeTeamId', as: 'homeTeams' });
+SequelizeMatches.belongsTo(SequelizeTeam, { foreignKey: 'awayTeamId', as: 'awayTeams' });
 
-// OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
-// OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
-
-// Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
-// Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
+SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'homeTeamId', as: 'homeTeams' });
+SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'awayTeamId', as: 'awayTeams' });
 
 export default SequelizeMatches;

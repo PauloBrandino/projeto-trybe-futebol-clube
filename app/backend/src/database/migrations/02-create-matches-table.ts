@@ -11,25 +11,40 @@ export default {
                 autoIncrement: true,
                 primaryKey: true
             },
-            home_team_id: {
+            homeTeamId: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
+                field: 'home_team_id',
+                references: {
+                    model: 'teams',
+                    key: 'id',
+                  },
             },
-            home_team_goals: {
+            homeTeamGoals: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
+                field: 'home_team_goals',
             },
-            away_team_id: {
+            awayTeamId: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
+                field: 'away_team_id',
+                references: {
+                  model: 'teams',
+                  key: 'id',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
             },
-            away_team_goals: {
+            awayTeamGoals: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: false,
+                field: 'away_team_goals',
             },
-            in_progress: {
+            inProgress: {
                 type: DataTypes.BOOLEAN,
-                allowNull: false
+                allowNull: false,
+                field: 'in_progress',
             }
         });
     },
