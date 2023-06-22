@@ -14,7 +14,7 @@ const { expect } = chai;
 describe('Testes para usuários', () => {
   describe('ROTA /login', () => {    
     it('Deve retornar um token ao logar com sucesso', async function () {
-      const userMock = SequelizeUser.build(userRegistered);
+      const userMock = SequelizeUser.build(userRegistered as any);
       sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
       const response = await chai.request(app).post('/login').send(validLoginBody);
 
