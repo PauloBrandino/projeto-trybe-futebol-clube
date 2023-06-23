@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');;
 
 import { app } from '../app';
 import SequelizeUser from '../../src/database/models/SequelizeUser';
-import { userRegistered, validLoginBody } from './mocks/mockUser';
+import { invalidEmailLogin, loginUserNotRegistered, userRegistered, validLoginBody } from './mocks/mockUser';
 
 chai.use(chaiHttp);
 
@@ -30,6 +30,43 @@ describe('Testes para usuários', () => {
       const response = await chai.request(app).post('/login').send(sendData);
 
       expect(response.status).to.be.equal(400);
+    });
+
+    it('Deve retornar um erro 400 ao não enviar um email', async function () {
+      const userMock = SequelizeUser.build(userRegistered as any);
+      sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
+
+      const { email, ...sendData } = userRegistered;
+      const response = await chai.request(app).post('/login').send(sendData);
+
+      expect(response.status).to.be.equal(400);
+    });
+
+    it('Deve retornar um erro 401 ao enviar um email no formato incorreto', async function () {
+      const userMock = SequelizeUser.build(userRegistered as any);
+      sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
+
+      const response = await chai.request(app).post('/login').send(invalidEmailLogin);
+
+      expect(response.status).to.be.equal(401);
+    });
+
+    it('Deve retornar um erro 401 ao enviar uma senha no formato incorreto', async function () {
+      const userMock = SequelizeUser.build(userRegistered as any);
+      sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
+
+      const response = await chai.request(app).post('/login').send(invalidEmailLogin);
+
+      expect(response.status).to.be.equal(401);
+    });
+
+    it('Deve retornar um erro 401 ao enviar um logar com email não cadastrado', async function () {
+      const userMock = SequelizeUser.build(userRegistered as any);
+      sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
+
+      const response = await chai.request(app).post('/login').send(loginUserNotRegistered);
+
+      expect(response.status).to.be.equal(401);
     });
     
     
