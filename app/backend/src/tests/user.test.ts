@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');;
 
 import { app } from '../app';
 import SequelizeUser from '../../src/database/models/SequelizeUser';
-import { invalidEmailLogin, loginUserNotRegistered, userRegistered, validLoginBody } from './mocks/mockUser';
+import { invalidEmailLogin, loginUserNotRegistered, userRegistered, validLoginBody, validToken } from './mocks/mockUser';
 
 chai.use(chaiHttp);
 
@@ -67,9 +67,31 @@ describe('Testes para usuários', () => {
       const response = await chai.request(app).post('/login').send(loginUserNotRegistered);
 
       expect(response.status).to.be.equal(401);
-    });
-    
+    }); 
     
     afterEach(sinon.restore);
   });
+
+  describe('ROTA /login/role', function() {
+    it('Deve retornar um erro 401 ao não enviar um token', async function () {
+      const response = await chai.request(app).get('/login/role').set({ "Authorization": validToken});
+
+      expect(response.status).to.be.equal(201);
+      expect(response.body).to.be.deep.equal({ role: "admin" })
+    }); 
+
+    it('Deve retornar um erro 401 ao não enviar um token', async function () {
+      const response = await chai.request(app).get('/login/role').set({ "Authorization": ''});
+
+      expect(response.status).to.be.equal(401);
+    }); 
+
+    it('Deve retornar um erro 401 ao não enviar um token', async function () {
+      const response = await chai.request(app).get('/login/role').set({ "Authorization": 'dasdadsadas'});
+
+      expect(response.status).to.be.equal(401);
+    });
+    
+    afterEach(sinon.restore);
+  })
 });

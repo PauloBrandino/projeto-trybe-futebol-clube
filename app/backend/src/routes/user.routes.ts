@@ -14,6 +14,7 @@ router.post(
 
 router.get(
   '/role',
+  Validations.validateToken,
   (req: Request, res: Response) => userController.userRole(req, res),
 );
 
