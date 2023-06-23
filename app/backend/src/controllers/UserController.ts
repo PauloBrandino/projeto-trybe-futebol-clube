@@ -29,6 +29,6 @@ export default class UserController {
       return res.status(401).json({ message: 'Token must be a valid token' });
     }
 
-    return res.status(201).json({ role: verify.role });
+    return res.status(200).json({ role: verify.role });
   }
 }
