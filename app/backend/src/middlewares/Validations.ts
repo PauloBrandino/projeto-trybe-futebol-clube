@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { verifyPassword, verifyEmail } from '../utils/verifyLoginFunctions';
+import { verifyToken } from '../utils/JWTUtils';
 
 export default class Validations {
   static validateLogin(req: Request, res: Response, next: NextFunction): Response | void {
@@ -17,4 +18,17 @@ export default class Validations {
 
     next();
   }
+
+  static validateToken = (req: Request, res: Response, next: NextFunction): Response | void => {
+    const { authorization } = req.headers;
+    if (!authorization) return res.status(401).json({ message: 'Token not found' });
+    try {
+      verifyToken(authorization);
+    } catch (error) {
+      return res.status(401)
+        .json({ message: 'Token must be a valid token' });
+    }
+
+    next();
+  };
 }
