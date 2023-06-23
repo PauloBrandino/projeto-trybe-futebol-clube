@@ -17,13 +17,13 @@ export default class UserService {
     const getUser = await this.userModel.getByEmail(email);
 
     if (!getUser) {
-      return { status: 'UNAUTHORIZED', data: { message: 'E-mail ou senha invalida' } };
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
     const verify = await this.encrypter.compare(password, getUser.password);
 
     if (!verify) {
-      return { status: 'UNAUTHORIZED', data: { message: 'E-mail ou senha invalida' } };
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
     const token = this.tokenGenerator.generate(getUser);
