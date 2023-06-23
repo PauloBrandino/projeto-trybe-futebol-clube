@@ -20,6 +20,19 @@ describe('Testes para usuários', () => {
 
       expect(response.status).to.be.equal(200);
       expect(response.body.token).not.to.be.undefined;
-    })
+    });
+
+    it('Deve retornar um erro 400 ao não enviar uma senha', async function () {
+      const userMock = SequelizeUser.build(userRegistered as any);
+      sinon.stub(SequelizeUser, 'findOne').resolves(userMock);
+
+      const { password, ...sendData } = userRegistered;
+      const response = await chai.request(app).post('/login').send(sendData);
+
+      expect(response.status).to.be.equal(400);
+    });
+    
+    
+    afterEach(sinon.restore);
   });
 });
