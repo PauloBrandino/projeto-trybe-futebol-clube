@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import SequelizeMatches from '../database/models/SequelizeMatches';
+import SequelizeMatch from '../database/models/SequelizeMatch';
 
 import { Response } from 'superagent';
 import { mockListTeam, mockTeam } from './mocks/mockTeam';
@@ -19,12 +19,12 @@ describe('Testes para Partidas', function() {
     describe('ROTA /matches', async function() {
         beforeEach(async () => {
            sinon
-            .stub(SequelizeMatches, 'findAll')
-            .resolves(listMatches as unknown as SequelizeMatches[]);
+            .stub(SequelizeMatch, 'findAll')
+            .resolves(listMatches as unknown as SequelizeMatch[]);
          });
       
         afterEach(() => {
-          (SequelizeMatches.findAll as sinon.SinonStub).restore();
+          (SequelizeMatch.findAll as sinon.SinonStub).restore();
         });
         
         it('Deve retornar uma lista com as informações da partida', async function(){
