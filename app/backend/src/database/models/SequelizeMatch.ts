@@ -12,9 +12,9 @@ export default class SequelizeMatch extends Model<InferAttributes<SequelizeMatch
 InferCreationAttributes<SequelizeMatch>> {
   declare id: CreationOptional<number>;
   declare homeTeamId: string;
-  declare homeTeamGoals: string;
+  declare homeTeamGoals: number;
   declare awayTeamId: string;
-  declare awayTeamGoals: string;
+  declare awayTeamGoals: number;
   declare inProgress: boolean;
 }
 

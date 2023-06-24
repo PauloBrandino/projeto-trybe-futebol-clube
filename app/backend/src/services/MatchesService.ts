@@ -1,6 +1,6 @@
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import { IMatch } from '../Interfaces/IMatch';
-import IMatchModel from '../Interfaces/IMatchModel';
+import IMatchModel, { resultUpdate } from '../Interfaces/IMatchModel';
 import MatchesModel from '../models/MatchesModel';
 
 export default class MatchesService {
@@ -22,5 +22,14 @@ export default class MatchesService {
     const finishMatch = await this.matchModel.updateMatchToFinish(id);
 
     return { status: 'SUCCESS', data: finishMatch };
+  }
+
+  public async updateResultMatchInProgress(
+    id: number,
+    result: resultUpdate,
+  ): Promise<ServiceResponse<string | null>> {
+    const updatedMatch = await this.matchModel.updateResultMatchInProgress(id, result);
+
+    return { status: 'SUCCESS', data: updatedMatch };
   }
 }

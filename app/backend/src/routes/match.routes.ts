@@ -12,6 +12,12 @@ router.patch(
   (req: Request, res: Response) => matchController.finishMath(req, res),
 );
 
+router.patch(
+  '/:id',
+  Validations.validateToken,
+  (req: Request, res: Response) => matchController.updateResultMatchInProgress(req, res),
+);
+
 router.get(
   '/',
   (req: Request, res: Response) => matchController.getAllMatches(req, res),

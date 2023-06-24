@@ -31,4 +31,13 @@ export default class MatchController {
 
     return res.status(200).json({ message: finishedMath.data });
   }
+
+  public async updateResultMatchInProgress(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const result = req.body;
+
+    const updatedMatch = await this.matchService.updateResultMatchInProgress(Number(id), result);
+
+    return res.status(200).json(updatedMatch.data);
+  }
 }

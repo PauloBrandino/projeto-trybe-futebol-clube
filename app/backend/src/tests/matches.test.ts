@@ -83,5 +83,38 @@ describe('Testes para Partidas', function() {
             expect(chaiHttpResponse.status).to.equal(200);
             expect(chaiHttpResponse.body).to.deep.equal({ message: 'Finished'});
         });
-    })
+    });
+
+    describe('ROTA /matches/:id', function() {       
+      beforeEach(async () => {
+        sinon
+          .stub(SequelizeMatch, 'update')
+          .resolves([2]);
+      });
+     
+      afterEach(() => {
+        (SequelizeMatch.update as sinon.SinonStub).restore();
+      });
+
+      it('Deve retornar um erro 401 ao não enviar um token inválido', async function () {
+        const response = await chai.request(app).patch('/matches/1').set({ "Authorization": 'dasdadsadas'});
+
+        expect(response.status).to.be.equal(401);
+      });
+
+      it('Deve retornar um erro 401 ao não enviar um token inválido', async function () {
+        const response = await chai.request(app).patch('/matches/1').set({ "Authorization": 'dasdadsadas'});
+
+        expect(response.status).to.be.equal(401);
+      });
+
+      it('Deve ser possível atualizar uma partida em andamento', async function () {
+          chaiHttpResponse = await chai.request(app).patch('/matches/1').set({ "Authorization": validToken }).send({
+            homeTeamGoals: 3,
+            awayTeamGoals: 1
+          });
+
+          expect(chaiHttpResponse.status).to.equal(200);
+      });
+  })
 })
