@@ -73,10 +73,10 @@ describe('Testes para usuários', () => {
   });
 
   describe('ROTA /login/role', function() {
-    it('Deve retornar um erro 401 ao não enviar um token', async function () {
+    it('Deve retornar o status role do user', async function () {
       const response = await chai.request(app).get('/login/role').set({ "Authorization": validToken});
 
-      expect(response.status).to.be.equal(201);
+      expect(response.status).to.be.equal(200);
       expect(response.body).to.be.deep.equal({ role: "admin" })
     }); 
 
@@ -86,7 +86,7 @@ describe('Testes para usuários', () => {
       expect(response.status).to.be.equal(401);
     }); 
 
-    it('Deve retornar um erro 401 ao não enviar um token', async function () {
+    it('Deve retornar um erro 401 ao não enviar um token inválido', async function () {
       const response = await chai.request(app).get('/login/role').set({ "Authorization": 'dasdadsadas'});
 
       expect(response.status).to.be.equal(401);
