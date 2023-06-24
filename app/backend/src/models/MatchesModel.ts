@@ -1,5 +1,5 @@
 import { IMatchWithTeam } from '../Interfaces/IMatch';
-import IMatchModel from '../Interfaces/IMatchModel';
+import IMatchModel, { resultUpdate } from '../Interfaces/IMatchModel';
 import SequelizeMatches from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 
@@ -43,5 +43,20 @@ export default class MatchesModel implements IMatchModel {
     if (affectedRows === 0) return null;
 
     return 'Finished';
+  }
+
+  async updateResultMatchInProgress(id: number, result: resultUpdate): Promise<string | null> {
+    const [affectedRows] = await this._model.update(
+      {
+        homeTeamGoals: result.homeTeamGoals,
+        awayTeamGoals: result.awayTeamGoals,
+      },
+      {
+        where: { id },
+      },
+    );
+    if (affectedRows === 0) return null;
+
+    return 'Updated';
   }
 }
