@@ -16,4 +16,18 @@ export default class MatchesModel implements IMatchModel {
 
     return dbData as unknown as IMatchWithTeam[];
   }
+
+  async getFilteredMatches(inProgress: boolean): Promise<IMatchWithTeam[]> {
+    const dbData = await this._model.findAll({
+      where: {
+        inProgress,
+      },
+      include: [
+        { model: SequelizeTeam, as: 'homeTeam', attributes: ['teamName'] },
+        { model: SequelizeTeam, as: 'awayTeam', attributes: ['teamName'] },
+      ],
+    });
+
+    return dbData as unknown as IMatchWithTeam[];
+  }
 }

@@ -7,8 +7,7 @@ import { app } from '../app';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 
 import { Response } from 'superagent';
-import { mockListTeam, mockTeam } from './mocks/mockTeam';
-import { listMatches } from './mocks/mockMatches';
+import { inProgress, listMatches } from './mocks/mockMatches';
 
 chai.use(chaiHttp);
 
@@ -32,6 +31,25 @@ describe('Testes para Partidas', function() {
   
             expect(chaiHttpResponse.status).to.equal(200);
             expect(chaiHttpResponse.body).to.deep.equal(listMatches);
+        });
+    });
+
+    describe('ROTA /matches com query string', function() {
+        beforeEach(async () => {
+            sinon
+             .stub(SequelizeMatch, 'findAll')
+             .resolves(inProgress as unknown as SequelizeMatch[]);
+          });
+       
+         afterEach(() => {
+           (SequelizeMatch.findAll as sinon.SinonStub).restore();
+         });
+
+        it('Deve retornar uma lista com as informações de partidas já finalizadas', async function () {
+            chaiHttpResponse = await chai.request(app).get('/matches?inProgress=true');
+            
+            expect(chaiHttpResponse.status).to.equal(200);
+            expect(chaiHttpResponse.body).to.deep.equal(inProgress);
         })
     })
 })

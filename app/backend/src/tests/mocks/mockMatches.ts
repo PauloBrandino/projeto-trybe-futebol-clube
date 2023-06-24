@@ -27,4 +27,6 @@ export const listMatches = [
         teamName: "Internacional"
       }
     }
-  ]
+  ];
+
+  export const inProgress = listMatches.filter((match) => match.inProgress === true);
