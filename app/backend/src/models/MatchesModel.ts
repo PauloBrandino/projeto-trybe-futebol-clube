@@ -30,4 +30,18 @@ export default class MatchesModel implements IMatchModel {
 
     return dbData as unknown as IMatchWithTeam[];
   }
+
+  async updateMatchToFinish(id: number): Promise<string | null> {
+    const [affectedRows] = await this._model.update(
+      {
+        inProgress: false,
+      },
+      {
+        where: { id },
+      },
+    );
+    if (affectedRows === 0) return null;
+
+    return 'Finished';
+  }
 }

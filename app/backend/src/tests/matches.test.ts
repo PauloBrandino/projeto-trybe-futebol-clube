@@ -8,6 +8,7 @@ import SequelizeMatch from '../database/models/SequelizeMatch';
 
 import { Response } from 'superagent';
 import { inProgress, listMatches } from './mocks/mockMatches';
+import { validToken } from './mocks/mockUser';
 
 chai.use(chaiHttp);
 
@@ -50,6 +51,37 @@ describe('Testes para Partidas', function() {
             
             expect(chaiHttpResponse.status).to.equal(200);
             expect(chaiHttpResponse.body).to.deep.equal(inProgress);
-        })
+        });
+    });
+
+    describe('ROTA /matches/:id/finish', function() {       
+        beforeEach(async () => {
+            sinon
+             .stub(SequelizeMatch, 'update')
+             .resolves([1]);
+          });
+       
+         afterEach(() => {
+           (SequelizeMatch.update as sinon.SinonStub).restore();
+         });
+
+        it('Deve retornar um erro 401 ao não enviar um token', async function () {
+            const response = await chai.request(app).patch('/matches/1/finish').set({ "Authorization": ''});
+      
+            expect(response.status).to.be.equal(401);
+          }); 
+      
+        it('Deve retornar um erro 401 ao não enviar um token inválido', async function () {
+          const response = await chai.request(app).patch('/matches/1/finish').set({ "Authorization": 'dasdadsadas'});
+
+          expect(response.status).to.be.equal(401);
+        });
+
+        it('Deve setar uma partida como finalizada', async function () {
+            chaiHttpResponse = await chai.request(app).patch('/matches/1/finish').set({ "Authorization": validToken });
+
+            expect(chaiHttpResponse.status).to.equal(200);
+            expect(chaiHttpResponse.body).to.deep.equal({ message: 'Finished'});
+        });
     })
 })

@@ -17,4 +17,10 @@ export default class MatchesService {
 
     return { status: 'SUCCESS', data: filteredMatches };
   }
+
+  public async updateMatchToFinish(id: number): Promise<ServiceResponse<string | null>> {
+    const finishMatch = await this.matchModel.updateMatchToFinish(id);
+
+    return { status: 'SUCCESS', data: finishMatch };
+  }
 }
