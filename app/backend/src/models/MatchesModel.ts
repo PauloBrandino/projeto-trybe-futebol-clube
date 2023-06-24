@@ -1,12 +1,12 @@
-import IMatches from '../Interfaces/IMatches';
+import { IMatchWithTeam } from '../Interfaces/IMatch';
 import IMatchModel from '../Interfaces/IMatchModel';
-import SequelizeMatches from '../database/models/SequelizeMatches';
+import SequelizeMatches from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 
 export default class MatchesModel implements IMatchModel {
   private _model = SequelizeMatches;
 
-  async getAllMatches(): Promise<IMatches[]> {
+  async getAllMatches(): Promise<IMatchWithTeam[]> {
     const dbData = await this._model.findAll({
       include: [
         { model: SequelizeTeam, as: 'homeTeam', attributes: ['teamName'] },
@@ -14,6 +14,6 @@ export default class MatchesModel implements IMatchModel {
       ],
     });
 
-    return dbData;
+    return dbData as unknown as IMatchWithTeam[];
   }
 }
