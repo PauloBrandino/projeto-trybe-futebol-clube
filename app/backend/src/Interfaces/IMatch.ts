@@ -4,8 +4,10 @@ export interface IMatch {
   homeTeamGoals: number;
   awayTeamId: number;
   awayTeamGoals: number;
-  inProgress: boolean;
+  inProgress?: boolean;
 }
+
+export type NewEntity<T> = Omit<T, 'id'>;
 
 export interface IMatchWithTeam extends IMatch {
   homeTeam: string;

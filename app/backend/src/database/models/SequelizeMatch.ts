@@ -11,9 +11,9 @@ import SequelizeTeam from './SequelizeTeam';
 export default class SequelizeMatch extends Model<InferAttributes<SequelizeMatch>,
 InferCreationAttributes<SequelizeMatch>> {
   declare id: CreationOptional<number>;
-  declare homeTeamId: string;
+  declare homeTeamId: number;
   declare homeTeamGoals: number;
-  declare awayTeamId: string;
+  declare awayTeamId: number;
   declare awayTeamGoals: number;
   declare inProgress: boolean;
 }

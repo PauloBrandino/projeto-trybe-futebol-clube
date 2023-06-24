@@ -1,4 +1,4 @@
-import { IMatchWithTeam } from '../Interfaces/IMatch';
+import { IMatch, IMatchWithTeam, NewEntity } from '../Interfaces/IMatch';
 import IMatchModel, { resultUpdate } from '../Interfaces/IMatchModel';
 import SequelizeMatches from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
@@ -58,5 +58,14 @@ export default class MatchesModel implements IMatchModel {
     if (affectedRows === 0) return null;
 
     return 'Updated';
+  }
+
+  async createMatch(dataToCreate: NewEntity<IMatch>): Promise<IMatch> {
+    const fullDataToCreate = { ...dataToCreate, inProgress: true };
+    const create = await this._model.create(fullDataToCreate);
+
+    const { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress } = create;
+
+    return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
   }
 }

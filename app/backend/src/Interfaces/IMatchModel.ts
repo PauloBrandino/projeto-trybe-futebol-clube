@@ -1,4 +1,4 @@
-import { IMatchWithTeam } from './IMatch';
+import { IMatch, IMatchWithTeam } from './IMatch';
 
 export type resultUpdate = {
   homeTeamGoals: number,
@@ -9,4 +9,5 @@ export default interface IMatchModel {
   getFilteredMatches(inProgress: boolean): Promise<IMatchWithTeam[]>
   updateMatchToFinish(id: number): Promise<string | null>
   updateResultMatchInProgress(id: number, result: resultUpdate): Promise<string | null>
+  createMatch(dataToCreate: IMatch): Promise<IMatch>
 }
