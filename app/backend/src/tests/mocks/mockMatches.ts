@@ -29,4 +29,20 @@ export const listMatches = [
     }
   ];
 
-  export const inProgress = listMatches.filter((match) => match.inProgress === true);
+export const inProgress = listMatches.filter((match) => match.inProgress === true);
+
+export const createdMatch = {
+  id: 49,
+  homeTeamId: 16,
+  homeTeamGoals: 2,
+  awayTeamId: 1,
+  awayTeamGoals: 2,
+  inProgress: true
+} 
+
+export const dataToCreate = {
+  homeTeamId: 16,
+  awayTeamId: 1,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+}
