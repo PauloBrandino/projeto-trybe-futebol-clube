@@ -96,3 +96,9 @@ export function sumGoalsOwn(matches: IMatchWithTeam[], teamName: string): number
 
   return goalsOwn;
 }
+
+export function efficiencyCalc(totalPoints: number, totalGames: number): number {
+  const efficiency = ((totalPoints / (totalGames * 3)) * 100).toFixed(2);
+
+  return Number(efficiency);
+}
