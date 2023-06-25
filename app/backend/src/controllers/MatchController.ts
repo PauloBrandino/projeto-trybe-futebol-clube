@@ -45,6 +45,9 @@ export default class MatchController {
     const dataToCreate = req.body;
 
     const serviceResponse = await this.matchService.createMatch(dataToCreate);
+    if (serviceResponse.status === 'NOT_FOUND') {
+      return res.status(404).json(serviceResponse.data);
+    }
 
     return res.status(201).json(serviceResponse.data);
   }

@@ -26,6 +26,7 @@ router.get(
 router.post(
   '/',
   Validations.validateToken,
+  Validations.validadeTeamMatch,
   (req: Request, res: Response) => matchController.createMatch(req, res),
 );
 

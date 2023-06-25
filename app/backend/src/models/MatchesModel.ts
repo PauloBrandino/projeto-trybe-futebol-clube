@@ -68,4 +68,10 @@ export default class MatchesModel implements IMatchModel {
 
     return { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress };
   }
+
+  async findByPk(param: number): Promise<IMatch | null> {
+    const dbData = await this._model.findByPk(param);
+
+    return dbData;
+  }
 }

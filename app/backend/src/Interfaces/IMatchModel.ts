@@ -10,4 +10,5 @@ export default interface IMatchModel {
   updateMatchToFinish(id: number): Promise<string | null>
   updateResultMatchInProgress(id: number, result: resultUpdate): Promise<string | null>
   createMatch(dataToCreate: IMatch): Promise<IMatch>
+  findByPk(param: number): Promise<IMatch | null>
 }
