@@ -57,3 +57,29 @@ export function sumTotalDraws(matches: IMatchWithTeam[], teamName: string): numb
   
     return totalDraws;
 };
+
+export function sumTotalLosses(matches: IMatchWithTeam[], teamName: string): number {
+    const totalLosses = matches.reduce((total: number, match: IMatchWithTeam): number => {
+      if (match.homeTeam.teamName === teamName && match.homeTeamGoals < match.awayTeamGoals) {
+        return total + 1;
+      } else if (match.awayTeam.teamName === teamName && match.awayTeamGoals < match.homeTeamGoals) {
+        return total + 1;
+      }
+      return total;
+    }, 0);
+  
+    return totalLosses;
+};
+
+export function sumGoalsFavor(matches: IMatchWithTeam[], teamName: string): number {
+    const goalsFavor = matches.reduce((total: number, match: IMatchWithTeam): number => {
+      if (match.homeTeam.teamName === teamName) {
+        return total + match.homeTeamGoals;
+      } else if (match.awayTeam.teamName === teamName) {
+        return total + match.awayTeamGoals;
+      }
+      return total;
+    }, 0);
+  
+    return goalsFavor;
+};
