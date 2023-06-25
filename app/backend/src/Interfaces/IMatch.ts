@@ -10,6 +10,6 @@ export interface IMatch {
 export type NewEntity<T> = Omit<T, 'id'>;
 
 export interface IMatchWithTeam extends IMatch {
-  homeTeam: string;
-  awayTeam: string;
+  homeTeam: { teamName: string };
+  awayTeam: { teamName: string };
 }

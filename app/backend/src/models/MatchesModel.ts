@@ -1,10 +1,10 @@
 import { IMatch, IMatchWithTeam, NewEntity } from '../Interfaces/IMatch';
 import IMatchModel, { resultUpdate } from '../Interfaces/IMatchModel';
-import SequelizeMatches from '../database/models/SequelizeMatch';
+import SequelizeMatch from '../database/models/SequelizeMatch';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 
 export default class MatchesModel implements IMatchModel {
-  private _model = SequelizeMatches;
+  private _model = SequelizeMatch;
 
   async getAllMatches(): Promise<IMatchWithTeam[]> {
     const dbData = await this._model.findAll({
