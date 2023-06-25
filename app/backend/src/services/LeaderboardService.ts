@@ -4,7 +4,7 @@ import MatchesModel from "../models/MatchesModel";
 import ILeaderboard from "../Interfaces/ILeaderboard";
 import ITeamModel from "../Interfaces/ITeamModel";
 import TeamModel from "../models/TeamModel";
-import { sumGoalsFavor, sumTotalDraws, sumTotalGames, sumTotalLosses, sumTotalPoints, sumTotalVictories } from "../utils/functionsLeaderboard";
+import { sumGoalsFavor, sumGoalsOwn, sumTotalDraws, sumTotalGames, sumTotalLosses, sumTotalPoints, sumTotalVictories } from "../utils/functionsLeaderboard";
 
 export default class LeaderboardService {
     constructor(private matchModel: IMatchModel = new MatchesModel(),
@@ -23,7 +23,7 @@ export default class LeaderboardService {
                 totalDraws: sumTotalDraws(finishedMatch, team.teamName),
                 totalLosses: sumTotalLosses(finishedMatch, team.teamName),
                 goalsFavor: sumGoalsFavor(finishedMatch, team.teamName),
-                goalsOwn: 2,
+                goalsOwn: sumGoalsOwn(finishedMatch, team.teamName),
             };
             return teamAverage
         })

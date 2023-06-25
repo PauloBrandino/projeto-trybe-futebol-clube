@@ -83,3 +83,16 @@ export function sumGoalsFavor(matches: IMatchWithTeam[], teamName: string): numb
   
     return goalsFavor;
 };
+
+export function sumGoalsOwn(matches: IMatchWithTeam[], teamName: string): number {
+    const goalsOwn = matches.reduce((total: number, match: IMatchWithTeam): number => {
+      if (match.homeTeam.teamName === teamName) {
+        return total + match.awayTeamGoals;
+      } else if (match.awayTeam.teamName === teamName) {
+        return total + match.homeTeamGoals;
+      }
+      return total;
+    }, 0);
+  
+    return goalsOwn;
+};
