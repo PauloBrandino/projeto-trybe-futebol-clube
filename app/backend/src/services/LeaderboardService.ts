@@ -38,22 +38,20 @@ export default class LeaderboardService {
       }; return teamAverage;
     });
 
-    return createLeaderboard
-  };
+    return createLeaderboard;
+  }
 
   public async orderListLeaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
     const list = await this.listLeaderboard();
     const orderedList = list.sort((compareTeamA: ILeaderboard, compareTeamB: ILeaderboard) => {
-        if(compareTeamA.totalPoints !== compareTeamB.totalPoints) {
-            return compareTeamB.totalPoints - compareTeamA.totalPoints;
-        } else if (compareTeamA.goalsBalance !== compareTeamB.goalsBalance) {
-            return compareTeamB.goalsBalance - compareTeamA.goalsBalance
-        } else {
-            return compareTeamB.goalsFavor - compareTeamA.goalsFavor
-        }
+      if (compareTeamA.totalPoints !== compareTeamB.totalPoints) {
+        return compareTeamB.totalPoints - compareTeamA.totalPoints;
+      } if (compareTeamA.goalsBalance !== compareTeamB.goalsBalance) {
+        return compareTeamB.goalsBalance - compareTeamA.goalsBalance;
+      }
+      return compareTeamB.goalsFavor - compareTeamA.goalsFavor;
     });
 
-    return { status: 'SUCCESS', data: orderedList }
+    return { status: 'SUCCESS', data: orderedList };
   }
-
 }
