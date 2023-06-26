@@ -19,7 +19,7 @@ export default class LeaderboardService {
     private teamModel: ITeamModel = new TeamModel(),
   ) {}
 
-  public async listLeaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
+  private async listLeaderboard(): Promise<ILeaderboard[]> {
     const finishedMatch = await this.matchModel.getFilteredMatches(false);
     const getAllTeams = await this.teamModel.getAllTeams();
     const createLeaderboard = getAllTeams.map((team) => {
@@ -38,6 +38,22 @@ export default class LeaderboardService {
       }; return teamAverage;
     });
 
-    return { status: 'SUCCESS', data: createLeaderboard };
+    return createLeaderboard
+  };
+
+  public async orderListLeaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
+    const list = await this.listLeaderboard();
+    const orderedList = list.sort((compareTeamA: ILeaderboard, compareTeamB: ILeaderboard) => {
+        if(compareTeamA.totalPoints !== compareTeamB.totalPoints) {
+            return compareTeamB.totalPoints - compareTeamA.totalPoints;
+        } else if (compareTeamA.goalsBalance !== compareTeamB.goalsBalance) {
+            return compareTeamB.goalsBalance - compareTeamA.goalsBalance
+        } else {
+            return compareTeamB.goalsFavor - compareTeamA.goalsFavor
+        }
+    });
+
+    return { status: 'SUCCESS', data: orderedList }
   }
+
 }
