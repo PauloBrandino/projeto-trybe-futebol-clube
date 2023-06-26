@@ -6,7 +6,7 @@ const leaderboardController = new LeaderBoardController();
 const router = Router();
 
 router.get(
-  '/home',
+  '/',
   (req: Request, res: Response) => leaderboardController.listLeaderboard(req, res),
 );
 
