@@ -10,7 +10,7 @@ import { efficiencyCalc, route, sumGoalsFavor,
   sumTotalGames,
   sumTotalLosses,
   sumTotalPoints,
-  sumTotalVictories,
+  sumVictories,
 } from '../utils/functionsLeaderboard';
 
 export default class LeaderboardService {
@@ -26,7 +26,7 @@ export default class LeaderboardService {
       const teamAverage = { name: team.teamName,
         totalPoints: sumTotalPoints(finishedMatch, team.teamName, router),
         totalGames: sumTotalGames(finishedMatch, team.teamName, router),
-        totalVictories: sumTotalVictories(finishedMatch, team.teamName, router),
+        totalVictories: sumVictories(finishedMatch, team.teamName, router),
         totalDraws: sumTotalDraws(finishedMatch, team.teamName, router),
         totalLosses: sumTotalLosses(finishedMatch, team.teamName, router),
         goalsFavor: sumGoalsFavor(finishedMatch, team.teamName, router),

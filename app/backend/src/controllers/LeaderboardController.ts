@@ -10,8 +10,14 @@ export default class LeaderBoardController {
     return res.status(200).json(serviceResponse.data);
   }
 
-  public async listLeaderboardHome(req: Request, res: Response): Promise<Response> {
+  public async listLeaderboardHome(_req: Request, res: Response): Promise<Response> {
     const serviceResponse = await this.leaderboardService.orderListLeaderboard('home');
+
+    return res.status(200).json(serviceResponse.data);
+  }
+
+  public async listLeaderboardAway(_req: Request, res: Response): Promise<Response> {
+    const serviceResponse = await this.leaderboardService.orderListLeaderboard('away');
 
     return res.status(200).json(serviceResponse.data);
   }

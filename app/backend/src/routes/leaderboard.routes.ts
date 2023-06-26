@@ -13,5 +13,9 @@ router.get(
   '/home',
   (req: Request, res: Response) => leaderboardController.listLeaderboardHome(req, res),
 );
+router.get(
+  '/away',
+  (req: Request, res: Response) => leaderboardController.listLeaderboardAway(req, res),
+);
 
 export default router;
