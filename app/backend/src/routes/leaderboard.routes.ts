@@ -9,5 +9,9 @@ router.get(
   '/',
   (req: Request, res: Response) => leaderboardController.listLeaderboard(req, res),
 );
+router.get(
+  '/home',
+  (req: Request, res: Response) => leaderboardController.listLeaderboardHome(req, res),
+);
 
 export default router;
