@@ -8,12 +8,11 @@ export default class LeaderBoardController {
     const serviceResponse = await this.leaderboardService.orderListLeaderboard(undefined);
 
     return res.status(200).json(serviceResponse.data);
-  };
+  }
 
   public async listLeaderboardHome(req: Request, res: Response): Promise<Response> {
     const serviceResponse = await this.leaderboardService.orderListLeaderboard('home');
 
     return res.status(200).json(serviceResponse.data);
   }
-
 }

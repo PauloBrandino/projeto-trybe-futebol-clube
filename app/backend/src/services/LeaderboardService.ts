@@ -4,7 +4,7 @@ import MatchesModel from '../models/MatchesModel';
 import ILeaderboard from '../Interfaces/ILeaderboard';
 import ITeamModel from '../Interfaces/ITeamModel';
 import TeamModel from '../models/TeamModel';
-import { efficiencyCalc, sumGoalsFavor,
+import { efficiencyCalc, route, sumGoalsFavor,
   sumGoalsOwn,
   sumTotalDraws,
   sumTotalGames,
@@ -13,37 +13,35 @@ import { efficiencyCalc, sumGoalsFavor,
   sumTotalVictories,
 } from '../utils/functionsLeaderboard';
 
-export type route = 'home' | undefined;
-
 export default class LeaderboardService {
   constructor(
     private matchModel: IMatchModel = new MatchesModel(),
     private teamModel: ITeamModel = new TeamModel(),
   ) {}
 
-  private async listLeaderboard(route: route): Promise<ILeaderboard[]> {
+  private async listLeaderboard(router: route): Promise<ILeaderboard[]> {
     const finishedMatch = await this.matchModel.getFilteredMatches(false);
     const getAllTeams = await this.teamModel.getAllTeams();
     const createLeaderboard = getAllTeams.map((team) => {
       const teamAverage = { name: team.teamName,
-        totalPoints: sumTotalPoints(finishedMatch, team.teamName, route),
-        totalGames: sumTotalGames(finishedMatch, team.teamName, route),
-        totalVictories: sumTotalVictories(finishedMatch, team.teamName, route),
-        totalDraws: sumTotalDraws(finishedMatch, team.teamName, route),
-        totalLosses: sumTotalLosses(finishedMatch, team.teamName, route),
-        goalsFavor: sumGoalsFavor(finishedMatch, team.teamName, route),
-        goalsOwn: sumGoalsOwn(finishedMatch, team.teamName, route),
+        totalPoints: sumTotalPoints(finishedMatch, team.teamName, router),
+        totalGames: sumTotalGames(finishedMatch, team.teamName, router),
+        totalVictories: sumTotalVictories(finishedMatch, team.teamName, router),
+        totalDraws: sumTotalDraws(finishedMatch, team.teamName, router),
+        totalLosses: sumTotalLosses(finishedMatch, team.teamName, router),
+        goalsFavor: sumGoalsFavor(finishedMatch, team.teamName, router),
+        goalsOwn: sumGoalsOwn(finishedMatch, team.teamName, router),
         goalsBalance: sumGoalsFavor(finishedMatch, team
-          .teamName, route) - sumGoalsOwn(finishedMatch, team.teamName, route),
-        efficiency: efficiencyCalc(finishedMatch, team.teamName, route),
+          .teamName, router) - sumGoalsOwn(finishedMatch, team.teamName, router),
+        efficiency: efficiencyCalc(finishedMatch, team.teamName, router),
       }; return teamAverage;
     });
 
     return createLeaderboard;
   }
 
-  public async orderListLeaderboard(route: route): Promise<ServiceResponse<ILeaderboard[]>> {
-    const list = await this.listLeaderboard(route);
+  public async orderListLeaderboard(router: route): Promise<ServiceResponse<ILeaderboard[]>> {
+    const list = await this.listLeaderboard(router);
 
     const orderedList = list.sort((compareTeamA: ILeaderboard, compareTeamB: ILeaderboard) => {
       if (compareTeamA.totalPoints !== compareTeamB.totalPoints) {

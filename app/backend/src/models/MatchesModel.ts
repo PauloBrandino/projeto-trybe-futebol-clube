@@ -18,7 +18,7 @@ export default class MatchesModel implements IMatchModel {
   }
 
   async getFilteredMatches(inProgress: boolean): Promise<IMatchWithTeam[]> {
-      const dbData = await this._model.findAll({
+    const dbData = await this._model.findAll({
       where: {
         inProgress,
       },
